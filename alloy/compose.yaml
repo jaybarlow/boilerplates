@@ -1,0 +1,20 @@
+services:
+  alloy:
+    image: grafana/alloy:v1.11.3
+    container_name: alloy
+    hostname: hostname
+    command:
+      - run
+      - --server.http.listen-addr=0.0.0.0:12345
+      - --storage.path=/var/lib/alloy/data
+      - /etc/alloy/config.alloy
+    ports:
+      - "12345:12345"
+    volumes:
+      - ./config/config.alloy:/etc/alloy/config.alloy
+      - alloy_data:/var/lib/alloy/data
+    restart: unless-stopped
+
+volumes:
+  alloy_data:
+    driver: local
